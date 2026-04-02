@@ -1,0 +1,31 @@
+export const transactionsData = [
+  {
+    id: 1,
+    name: "Abhinav",
+    booking: "Dec. 23, 2024 @ 9:30am",
+    bookingDate: new Date("2024-12-23"),
+    amount: 2000,
+    category: "Food",
+    type: "expense",
+  },
+  {
+    id: 2,
+    name: "Abhinav",
+    booking: "Dec. 23, 2024 @ 9:30am",
+    bookingDate: new Date("2024-12-23"),
+    date: "2026-03-28",
+    amount: 15000,
+    category: "Salary",
+    type: "income",
+  },
+  {
+    id: 3,
+    name: "Abhinav",
+    booking: "Dec. 23, 2024 @ 9:30am",
+    bookingDate: new Date("2024-12-23"),
+    date: "2026-03-25",
+    amount: 3000,
+    category: "Shopping",
+    type: "expense",
+  },
+];
