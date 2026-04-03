@@ -77,15 +77,19 @@ const yearlyData = {
 };
 const ProfileData = [
     {
-        profileImage: "https://i.pravatar.cc/300",
+        profileImage: "https://ui-avatars.com/api/?name=Deeksha&background=random",
         name : "Deeksha"
     },
     {
-        profileImage: "https://i.pravatar.cc/300",
+        profileImage: "https://ui-avatars.com/api/?name=Deeksha&background=random",
         name : "Abhinav"
     },
     {
-        profileImage: "https://i.pravatar.cc/300",
+        profileImage: "https://ui-avatars.com/api/?name=Dev&background=random",
+        name : "Sambhavi"
+    },
+    {
+        profileImage: "https://ui-avatars.com/api/?name=Shefali&background=random0",
         name : "Sambhavi"
     },
     {
@@ -93,11 +97,7 @@ const ProfileData = [
         name : "Sambhavi"
     },
     {
-        profileImage: "https://i.pravatar.cc/300",
-        name : "Sambhavi"
-    },
-    {
-        profileImage: "https://i.pravatar.cc/300",
+        profileImage: "https://ui-avatars.com/api/?name=Deeksha&background=random",
         name : "View All"
     },
 ]
@@ -229,7 +229,7 @@ const Dashboard = () => {
                         <img
                         src={profile.profileImage}
                         alt="profile"
-                        className={`w-10 h-10 rounded-full ${index === ProfileData.length - 1 ? "blur-xs opacity-85" : ""}` }
+                        className={`w-10 h-10 rounded-full ${index === ProfileData.length - 1 ? "blur-xs opacity-95" : ""}` }
                         />
                         <p className="text-sm text-gray-500">{profile.name}</p>
                     </div>
