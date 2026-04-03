@@ -9,7 +9,7 @@ import {
 } from "recharts";
 import CustomDropdown from "../components/CustomDrop";
 import { useState } from "react";
-import bgImage from '/src/assets/dashboard/bgImage3.png'
+import bgImage from '/src/assets/dashboard/bgImage.webp'
 
 const CategoryData = {
   Food: [
