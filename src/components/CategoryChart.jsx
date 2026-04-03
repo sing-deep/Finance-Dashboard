@@ -30,7 +30,7 @@ const CategoryPieChart = () => {
             dataKey="value"
             nameKey="name"
             outerRadius={100}
-            label
+            label={({ name, value }) => `${name}: ${value}`}
           >
             {data.map((entry, index) => (
               <Cell key={index} fill={COLORS[index % COLORS.length]} />

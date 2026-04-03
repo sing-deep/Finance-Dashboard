@@ -9,6 +9,7 @@ import {
 } from "recharts";
 import CustomDropdown from "../components/CustomDrop";
 import { useState } from "react";
+import bgImage from '/src/assets/dashboard/bgImage.jpg'
 
 const CategoryData = {
   Food: [
@@ -110,7 +111,9 @@ const Dashboard = () => {
         {/* total balance and graph */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 w-full ">
         {/* balance summary */}
-        <Card className="md:col-span-1">
+        <Card className="md:col-span-1 bg-[url()] bg-cover bg-center"
+              style={{ backgroundImage: `url(${bgImage})` }} >
+          
           <CardHeader title="Balance" />
           <div >
              <h1 className="font-semibold text-xl md:text-4xl mb-2 ">$48,250.08</h1>
@@ -126,7 +129,9 @@ const Dashboard = () => {
          
           <div>
             <p className="text-sm text-gray-500">Credit limit: <span className="text-black font-semibold">$420,980.00</span></p>
-          </div>
+          
+          </div>      
+          
         </Card>
         {/* graph summary */}
         <Card className="md:col-span-2" >

@@ -131,26 +131,15 @@ function Transactions() {
   }, [showAddModal]);
 
   return (
-      <div className="flex flex-col gap-5">
-          {isPageLoading ? (
-            <div className="space-y-6 py-10">
-              <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-                <Skeleton className="h-20 rounded-2xl" />
-                <Skeleton className="h-20 rounded-2xl" />
-                <Skeleton className="h-20 rounded-2xl" />
-                <Skeleton className="h-20 rounded-2xl" />
-              </div>
-              <Skeleton className="h-[450px] rounded-2xl" />
-            </div>
-          ) : (
-            <>
-          <div className="grid grid-cols-1 sm:grid-cols-[1fr_1fr_1fr_auto] gap-4 md:gap-6 items-start">
+      <div className="flex flex-col gap-5 min-w-0 overflow-hidden">   
+        
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_auto] gap-4 md:gap-6 items-start">
             {/* DatePicker */}
             <div className="space-y-2 relative">
               <p className="font-bold">Statement Period</p>
               <div
                 onClick={() => setShowDatePicker(!showDatePicker)}
-                className="rounded-2xl gap-3 flex justify-between px-4 py-2 bg-white border border-[#C3C3C4] whitespace-nowrap cursor-pointer hover:bg-gray-50"
+                className="rounded-2xl gap-3 flex justify-between px-4 py-2 bg-white border border-[#C3C3C4] min-w-0 cursor-pointer hover:bg-gray-50"
               >
                 <p>
                   {startDate && endDate
@@ -218,7 +207,7 @@ function Transactions() {
               <p className="font-bold">Transaction Category</p>
               <div
                 onClick={() => setShowCategoryDropdown(!showCategoryDropdown)}
-                className="rounded-2xl gap-3 flex justify-between px-4 py-2 bg-white border-[1px] border-[#C3C3C4] whitespace-nowrap cursor-pointer hover:bg-gray-50"
+                className="rounded-2xl gap-3 flex justify-between px-4 py-2 bg-white border-[1px] border-[#C3C3C4] min-w-0 cursor-pointer hover:bg-gray-50"
               >
                 <p>{selectedCategory}</p>
                 <HiChevronDown className="inline lg:w-6 lg:h-6 w-4 h-4" />
@@ -249,7 +238,7 @@ function Transactions() {
               <p className="font-bold">Names</p>
               <div
                 onClick={() => setShowNameDropdown(!showNameDropdown)}
-                className="rounded-2xl gap-3 flex justify-between px-4 py-2 bg-white border-[1px] border-[#C3C3C4] whitespace-nowrap cursor-pointer hover:bg-gray-50"
+                className="rounded-2xl gap-3 flex justify-between px-4 py-2 bg-white border-[1px] border-[#C3C3C4] min-w-0 cursor-pointer hover:bg-gray-50"
               >
                 <p>{selectedName}</p>
                 <HiChevronDown className="inline lg:w-6 lg:h-6 w-4 h-4" />
@@ -278,7 +267,7 @@ function Transactions() {
             {/* buttons */}
             <div className="self-end flex gap-3">
                 {role === "Viewer" && (
-                    <button className="rounded-2xl gap-3 flex px-4 py-2.5 border-[1.5px] border-green-700 justify-center items-center hover:bg-purple-50 transition-colors whitespace-nowrap">
+                    <button className="rounded-2xl gap-3 flex px-4 py-2.5 border-[1.5px] border-green-700 justify-center items-center hover:bg-purple-50 transition-colors min-w-0">
                     <FiDownload size={24} />
                     <p className="font-bold">Download Invoices</p>
                     </button>
@@ -286,7 +275,7 @@ function Transactions() {
 
                 {role === "Admin" && (
                     <div className="flex items-center gap-2 relative">
-                      <button className="rounded-2xl gap-3 flex px-4 py-2.5 border-[1.5px] border-green-700 justify-center items-center hover:bg-purple-50 transition-colors whitespace-nowrap"
+                      <button className="rounded-2xl gap-3 flex px-4 py-2.5 border-[1.5px] border-green-700 justify-center items-center hover:bg-purple-50 transition-colors min-w-0"
                       onClick={() => setShowAddModal(true)}>
                     <p className="font-bold">Add Transaction</p>
                     </button>
@@ -307,7 +296,7 @@ function Transactions() {
            {/* addtransaction modal */}
 
           {showAddModal && (
-            <div className="fixed inset-0 bg-black/30 flex items-center justify-center overflow-x-auto z-50">
+            <div className="fixed inset-0 bg-black/30 flex items-center justify-center overflow-y-auto z-50">
              <div className="bg-white p-5 rounded-2xl w-full max-w-sm mx-4 shadow-lg">
                 
                 {/* Header */}
@@ -356,7 +345,7 @@ function Transactions() {
           {/* table */}
        
           <div className="border-[1.5px] border-[#C3C3C4] overflow-x-auto  rounded-2xl bg-white">
-            <table className="w-full min-w-0 table-auto">
+            <table className="w-full min-w-[300px] table-auto">
               <thead className="bg-white text-black font-bold text-sm md:text-base text-left">
                 <tr className="border-b-[1.5px] border-[#C3C3C4] w-full">
                   <th className="px-4 py-2">
@@ -413,9 +402,7 @@ function Transactions() {
               </tbody>
             </table>
           </div>
-          </>
-          )}
-        
+          
       </div>
     
   );
