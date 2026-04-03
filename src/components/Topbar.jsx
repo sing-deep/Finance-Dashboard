@@ -24,7 +24,7 @@ const Topbar = () => {
   
 
   return (
-    <div className="flex items-center justify-between px-4 md:px-6 py-3  bg-white">
+    <div className="flex items-center justify-between ml-12 md:ml-0 px-4 md:px-6 py-3  bg-white">
       
       {/* Left */}
       <div>

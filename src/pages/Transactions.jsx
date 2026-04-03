@@ -1,5 +1,5 @@
 import { HiChevronDown } from "react-icons/hi";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect} from "react";
 import { IoCalendarOutline } from "react-icons/io5";
 import { FiDownload } from "react-icons/fi";
 import DatePicker from "react-datepicker";
@@ -15,8 +15,6 @@ function Transactions() {
   const isPageLoading = useSimulatedLoading();
   const {allTransactions, setAllTransactions, role, setRole} = useApp();
   const [showAddModal, setShowAddModal] = useState(false);
-
-  // Filter states
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("All transactions");
@@ -32,7 +30,8 @@ function Transactions() {
   amount: "",
   type: "",
   invoice: false,
-});
+  });
+  const isFormValid =  newTransaction.name && newTransaction.category && newTransaction.amount && newTransaction.type;
 
   // Get unique categories and names
   const categories = useMemo(() => {
@@ -96,9 +95,11 @@ function Transactions() {
       setAllTransactions(updated);
     }
   };
-const handleAddTransaction = () => {
-  setAllTransactions([newTransaction, ...allTransactions]);
-
+  const handleAddTransaction = () => {setAllTransactions([newTransaction, ...allTransactions]);
+   if (!name || !category || !amount || !type) {
+    alert("Please fill all required fields");
+    return;
+  }
   // Reset form
   setNewTransaction({
     name: "",
@@ -112,28 +113,38 @@ const handleAddTransaction = () => {
 
   // Close modal
   setShowAddModal(false);
-};
+ };
   const handleDeleteSelected = () => {
     const updated = allTransactions.filter((t) => !t.invoice);
     setAllTransactions(updated);
     };
+  useEffect(() => {
+    if (showAddModal) {
+        document.body.style.overflow = "hidden";
+    } else {
+        document.body.style.overflow = "auto";
+    }
+
+    return () => {
+        document.body.style.overflow = "auto";
+    };
+  }, [showAddModal]);
 
   return (
-      <section className=" min-h-screen">
-        <div>
+      <div className="flex flex-col gap-5">
           {isPageLoading ? (
             <div className="space-y-6 py-10">
               <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-                <Skeleton className="h-[80px] rounded-2xl" />
-                <Skeleton className="h-[80px] rounded-2xl" />
-                <Skeleton className="h-[80px] rounded-2xl" />
-                <Skeleton className="h-[80px] rounded-2xl" />
+                <Skeleton className="h-20 rounded-2xl" />
+                <Skeleton className="h-20 rounded-2xl" />
+                <Skeleton className="h-20 rounded-2xl" />
+                <Skeleton className="h-20 rounded-2xl" />
               </div>
               <Skeleton className="h-[450px] rounded-2xl" />
             </div>
           ) : (
             <>
-          <div className="grid grid-cols-1 sm:[grid-template-columns:1fr_1fr_1fr_auto] gap-4 md:gap-6 items-start pb-6 md:pb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-[1fr_1fr_1fr_auto] gap-4 md:gap-6 items-start">
             {/* DatePicker */}
             <div className="space-y-2 relative">
               <p className="font-bold">Statement Period</p>
@@ -292,10 +303,12 @@ const handleAddTransaction = () => {
                 )}
             </div>
           </div>
+           
+           {/* addtransaction modal */}
 
           {showAddModal && (
-            <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
-                <div className="bg-white p-5 rounded-2xl w-[350px] shadow-lg">
+            <div className="fixed inset-0 bg-black/30 flex items-center justify-center overflow-x-auto z-50">
+             <div className="bg-white p-5 rounded-2xl w-full max-w-sm mx-4 shadow-lg">
                 
                 {/* Header */}
                 <div className="flex justify-between items-center mb-4">
@@ -308,36 +321,43 @@ const handleAddTransaction = () => {
 
                 {/* Form */}
                 <div className="flex flex-col gap-3">
-                    <InputField name="name" label="Name" placeholder="Enter Name" type="text" value={newTransaction.name} 
+                    <InputField name="name" label="Name*" placeholder="Enter Name" type="text" value={newTransaction.name} 
                      onChange={(e) =>
                         setNewTransaction({ ...newTransaction, name: e.target.value })
                     }/>
-                    <InputField name="category" label="Category" placeholder="Enter Category" type="text" value={newTransaction.category} 
+                    <InputField name="category" label="Category*" placeholder="Enter Category" type="text" value={newTransaction.category} 
                      onChange={(e) =>
                         setNewTransaction({ ...newTransaction, category: e.target.value })
                     } />
-                    <InputField name="amount" label="Amount" placeholder="Enter Amount" type="number" value={newTransaction.amount}  onChange={(e) =>
+                    <InputField name="amount" label="Amount*" placeholder="Enter Amount" type="number" value={newTransaction.amount}  onChange={(e) =>
                         setNewTransaction({ ...newTransaction, amount: e.target.value })
                     }/>
-                    <InputField name="type" label="Type" placeholder="" type="text" value={newTransaction.type}  
+                    <InputField name="type" label="Type*" placeholder="" type="text" value={newTransaction.type}  
                     onChange={(e) =>
                         setNewTransaction({ ...newTransaction, type: e.target.value })
                     } />
 
                     <button
-                    onClick={handleAddTransaction}
-                    className="mt-2 bg-green-600 text-white py-2 rounded-lg"
-                    >
-                    Save
+                        onClick={handleAddTransaction}
+                        disabled={!isFormValid}
+                        className={`mt-2 py-2 rounded-lg text-white ${
+                            isFormValid
+                            ? "bg-green-600 hover:bg-green-700"
+                            : "bg-gray-400 cursor-not-allowed"
+                        }`}
+                        >
+                        Save
                     </button>
                 </div>
                 </div>
             </div>
           )}
+
+          {/* table */}
        
-          <div className="border-[1.5px] border-[#C3C3C4] overflow-x-auto rounded-2xl bg-white">
-            <table className="w-full">
-              <thead className="bg-white text-black font-bold text-base md:text-xl text-left">
+          <div className="border-[1.5px] border-[#C3C3C4] overflow-x-auto  rounded-2xl bg-white">
+            <table className="w-full min-w-0 table-auto">
+              <thead className="bg-white text-black font-bold text-sm md:text-base text-left">
                 <tr className="border-b-[1.5px] border-[#C3C3C4] w-full">
                   <th className="px-4 py-2">
                     <div className="flex items-center gap-1">
@@ -361,7 +381,7 @@ const handleAddTransaction = () => {
                   <th className="px-4 py-2">Invoice</th>
                 </tr>
               </thead>
-              <tbody className="text-sm md:text-base">
+              <tbody className="text-xs md:text-sm">
                 {filteredTransactions.map((transaction, index) => (
                   <tr
                     key={index}
@@ -395,8 +415,8 @@ const handleAddTransaction = () => {
           </div>
           </>
           )}
-        </div>
-      </section>
+        
+      </div>
     
   );
 }

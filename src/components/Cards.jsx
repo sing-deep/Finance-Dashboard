@@ -12,7 +12,7 @@ function Card({ className, ...props }) {
 function CardHeader({ title, showMenu = true, children }) {
   return (
     <div className="flex justify-between items-center">
-      <h5 className="text-base font-semibold">{title}</h5>
+      <h5 className="text-sm md:text-base font-semibold">{title}</h5>
 
       <div className="flex  items-center gap-2">
         {children}
